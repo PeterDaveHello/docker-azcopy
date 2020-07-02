@@ -7,7 +7,7 @@
 
 [![Docker Hub badge](http://dockeri.co/image/peterdavehello/azcopy)](https://hub.docker.com/r/peterdavehello/azcopy/)
 
-Dockerized [AzCopy](https://github.com/Azure/azure-storage-azcopy/) based on Aline Linux with various versions, easy to use and easy to integrate with CI/CD.
+Dockerized [AzCopy](https://github.com/Azure/azure-storage-azcopy/) based on Alpine Linux with various versions, easy to use and easy to integrate with CI/CD.
 
 - GitHub: <https://github.com/PeterDaveHello/docker-azcopy>
 - Docker Hub: <https://hub.docker.com/r/peterdavehello/azcopy>
