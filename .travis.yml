@@ -1,0 +1,41 @@
+---
+
+dist: bionic
+
+services:
+  - docker
+
+stages:
+  - Static test
+  - Build test
+
+jobs:
+  include:
+    - stage: Static test
+      env:
+        - Test: hadolint
+      language: minimal
+      script:
+        - docker run --rm -i hadolint/hadolint < Dockerfile
+
+    - stage: Static test
+      env:
+        - Test: dockerfile_lint
+      language: node_js
+      node_js:
+        - "12"
+      script:
+        - npx --cache .npx dockerfile_lint
+      cache:
+        directories:
+          - .npx
+
+    - stage: Build test
+      language: minimal
+      before_script:
+        - LATEST_AZCOPY="$(curl -sLo- https://api.github.com/repos/Azure/azure-storage-azcopy/releases | jq -r '.[0].tag_name' | sed 's/^v//g')"
+        - export LATEST_AZCOPY
+      script:
+        - docker build --build-arg AZCOPY_VERSION="$LATEST_AZCOPY" -t docker-azcopy:$TRAVIS_COMMIT .
+      after_success:
+        - docker run --rm docker-azcopy:$TRAVIS_COMMIT azcopy --version
