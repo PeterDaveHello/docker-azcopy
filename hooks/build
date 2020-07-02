@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ "latest" = "$DOCKER_TAG" ]; then
+    DOCKER_TAG=$(wget https://api.github.com/repos/Azure/azure-storage-azcopy/releases -qO- | grep tag_name | head -n 1 | awk -F'"' '{print $4}' | sed 's/^v//g')
+fi
+
+docker build --build-arg AZCOPY_VERSION="$DOCKER_TAG" -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" .
