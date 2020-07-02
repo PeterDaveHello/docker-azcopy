@@ -9,8 +9,8 @@
 
 Dockerized [AzCopy](https://github.com/Azure/azure-storage-azcopy/) based on Aline Linux with various versions, easy to use and easy to integrate with CI/CD.
 
-GitHub: <https://github.com/PeterDaveHello/docker-azcopy>
-Docker Hub: <https://hub.docker.com/r/peterdavehello/azcopy>
+- GitHub: <https://github.com/PeterDaveHello/docker-azcopy>
+- Docker Hub: <https://hub.docker.com/r/peterdavehello/azcopy>
 
 See README.md of AzCopy for more details: <https://github.com/Azure/azure-storage-azcopy/#readme>
 
