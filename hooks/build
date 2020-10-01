@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "latest" = "$DOCKER_TAG" ]; then
+if [ "latest" = "$DOCKER_TAG" ] && [ "master" = "$SOURCE_BRANCH" ]; then
     AZCOPY_VERSION=$(curl -sLo- https://api.github.com/repos/Azure/azure-storage-azcopy/releases | grep tag_name | head -n 1 | awk -F'"' '{print $4}' | sed 's/^v//g')
 else
     AZCOPY_VERSION="$SOURCE_BRANCH"
