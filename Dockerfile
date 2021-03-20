@@ -1,6 +1,6 @@
 ARG AZCOPY_VERSION
 
-FROM golang:1.13-alpine3.12 as build
+FROM golang:1.15-alpine3.12 as build
 ENV GOARCH=amd64 GOOS=linux
 WORKDIR /azcopy
 ARG AZCOPY_VERSION
