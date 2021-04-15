@@ -1,6 +1,6 @@
 ARG AZCOPY_VERSION
 
-FROM golang:1.16-alpine3.12 as build
+FROM golang:1.16-alpine3.13 as build
 ENV GOARCH=amd64 GOOS=linux
 WORKDIR /azcopy
 ARG AZCOPY_VERSION
@@ -9,7 +9,7 @@ RUN tar xf src.tgz --strip 1 \
  && go build -o azcopy \
  && ./azcopy --version
 
-FROM alpine:3.12 as release
+FROM alpine:3.13 as release
 ARG AZCOPY_VERSION
 LABEL name="docker-azcopy"
 LABEL version="$AZCOPY_VERSION"
