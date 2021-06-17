@@ -16,7 +16,7 @@ jobs:
         - Test: hadolint
       language: minimal
       script:
-        - docker run --rm -i hadolint/hadolint < Dockerfile
+        - docker run --rm -i -v $PWD/.hadolint.yml:/.hadolint.yml hadolint/hadolint < Dockerfile
 
     - stage: Static test
       env:
