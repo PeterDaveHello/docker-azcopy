@@ -14,4 +14,24 @@ Dockerized [AzCopy](https://github.com/Azure/azure-storage-azcopy/) based on Alp
 
 See README.md of AzCopy for more details: <https://github.com/Azure/azure-storage-azcopy/#readme>
 
+## Versioning
+
+The Docker image tags here will all be mapping back to a corresponding AzCopy version on [its releases page on GitHub](https://github.com/Azure/azure-storage-azcopy/releases), just without the `v` prefix.
+
+The `latest` tag and short version (version string without the minor or patch version) are also supported here, for example, using tag `10` will be the same as using the latest `10.x.y`, whatever the current latest v10 is.
+
+Most versions of AzCopy will have its corresponding images here.
+
 You can find a valid version on the Docker Hub Tags page <https://hub.docker.com/r/peterdavehello/copy/tags>
+
+## Usage
+
+```sh
+docker run --rm -it -v /local/path/to/mount:/container/path peterdavehello/azcopy[:<version>] azcopy [command] [arguments]
+```
+
+For example:
+
+```sh
+docker run --rm -it -v $PWD/src:/src peterdavehello/azcopy:10.11.0 azcopy sync /src https://azcopydockertest.blob.core.windows.net/$$web
+```
