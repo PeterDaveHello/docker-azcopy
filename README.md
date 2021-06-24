@@ -35,3 +35,18 @@ For example:
 ```sh
 docker run --rm -it -v $PWD/src:/src peterdavehello/azcopy:10.11.0 azcopy sync /src https://azcopydockertest.blob.core.windows.net/$$web
 ```
+
+You can also confirm its version by:
+
+```sh
+$ docker run --rm -it -v $PWD/src:/src peterdavehello/azcopy:10.11.0 azcopy --version
+
+Unable to find image 'peterdavehello/azcopy:10.11.0' locally
+10.11.0: Pulling from peterdavehello/azcopy
+540db60ca938: Already exists 
+2bb029cc37b3: Pull complete 
+0706491099ca: Pull complete 
+Digest: sha256:bf339591009673060633cf95c3339e386a3d4e187e206da116547ac081a0b375
+Status: Downloaded newer image for peterdavehello/azcopy:10.11.0
+azcopy version 10.11.0
+```
