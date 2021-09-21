@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.com/PeterDaveHello/docker-azcopy.svg?branch=master)](https://travis-ci.com/PeterDaveHello/docker-azcopy)
 [![Docker Hub pulls](https://img.shields.io/docker/pulls/peterdavehello/azcopy.svg)](https://hub.docker.com/r/peterdavehello/azcopy/)
-[![Docker image layers](https://images.microbadger.com/badges/image/peterdavehello/azcopy.svg)](https://microbadger.com/images/peterdavehello/azcopy/)
-[![Docker image version](https://images.microbadger.com/badges/version/peterdavehello/azcopy.svg)](https://hub.docker.com/r/peterdavehello/azcopy/tags/)
 
 [![Docker Hub badge](http://dockeri.co/image/peterdavehello/azcopy)](https://hub.docker.com/r/peterdavehello/azcopy/)
 
