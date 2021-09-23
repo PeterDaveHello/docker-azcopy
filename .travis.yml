@@ -33,10 +33,24 @@ jobs:
     - stage: Build test
       language: minimal
       before_script:
-        - LATEST_AZCOPY="$(curl -sSLo- https://api.github.com/repos/Azure/azure-storage-azcopy/releases | jq -r '.[0].tag_name' | sed 's/^v//g')"
-        - test -n "$LATEST_AZCOPY"
-        - export LATEST_AZCOPY
+        - if [ "$TRAVIS_TAG" = "" ]; then
+            AZCOPY_VERSION=$(curl -sLo- https://api.github.com/repos/Azure/azure-storage-azcopy/releases | grep tag_name | head -n 1 | awk -F'"' '{print $4}' | sed 's/^v//g');
+          else
+            AZCOPY_VERSION="$TRAVIS_TAG";
+          fi
+        - echo "$AZCOPY_VERSION"
+        - tag=($(echo $AZCOPY_VERSION | tr "." " "))
       script:
-        - docker build --build-arg AZCOPY_VERSION="$LATEST_AZCOPY" -t docker-azcopy:$TRAVIS_COMMIT .
-      after_success:
-        - docker run --rm docker-azcopy:$TRAVIS_COMMIT azcopy --version
+        - if [[ "$TRAVIS_TAG" =~ ^[0-9]+(\.[0-9]+){2}$ ]]; then
+            mkdir -p ~/.docker/cli-plugins;
+            wget -O ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64;
+            chmod a+x ~/.docker/cli-plugins/docker-buildx;
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes;
+            docker buildx create --use --name mybuilder;
+            docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD};
+            travis_wait 30 docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t $DOCKER_USERNAME/docker-azcopy:$AZCOPY_VERSION -t $DOCKER_USERNAME/docker-azcopy:${tag[0]}.${tag[1]} -t $DOCKER_USERNAME/docker-azcopy:${tag[0]} -t $DOCKER_USERNAME/docker-azcopy:latest --platform linux/amd64,linux/arm64 --push .;
+            docker buildx rm mybuilder;
+          else
+            docker build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t docker-azcopy:$TRAVIS_COMMIT .;
+            docker run --rm docker-azcopy:$TRAVIS_COMMIT azcopy --version;
+          fi
