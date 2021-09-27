@@ -36,7 +36,14 @@ jobs:
         - LATEST_AZCOPY="$(curl -sLo- https://api.github.com/repos/Azure/azure-storage-azcopy/releases | jq -r '.[0].tag_name' | sed 's/^v//g')"
         - test -n "$LATEST_AZCOPY"
         - export LATEST_AZCOPY
+        - mkdir -p ~/.docker/cli-plugins
+        - wget -O - https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64 > ~/.docker/cli-plugins/docker-buildx
+        - chmod a+x ~/.docker/cli-plugins/docker-buildx
+        - docker run --rm --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64
+        - docker buildx create --use --name mybuilder
       script:
-        - docker build --build-arg AZCOPY_VERSION="$LATEST_AZCOPY" -t docker-azcopy:$TRAVIS_COMMIT .
+        - docker login -u ajv21 -p Jun21@2021
+        - docker buildx build --build-arg AZCOPY_VERSION="$LATEST_AZCOPY" -t ajv21/docker-azcopy:$TRAVIS_COMMIT --platform linux/amd64,linux/arm64 --push .
+        - docker buildx rm mybuilder
       after_success:
-        - docker run --rm docker-azcopy:$TRAVIS_COMMIT azcopy --version
+        - docker run --rm ajv21/docker-azcopy:$TRAVIS_COMMIT azcopy --version
