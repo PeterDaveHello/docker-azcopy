@@ -25,7 +25,7 @@ jobs:
         - docker buildx create --use --name mybuilder
       script:
         - docker login -u ajv21 -p Jun21@2021
-        - travis_wait 20 docker buildx build --build-arg AZCOPY_VERSION="$LATEST_AZCOPY" -t ajv21/docker-azcopy:$TRAVIS_COMMIT --platform linux/amd64,linux/arm64 --push . 
+        - docker buildx build --build-arg AZCOPY_VERSION="$LATEST_AZCOPY" -t ajv21/docker-azcopy:$TRAVIS_COMMIT --platform linux/amd64,linux/arm64 --push . >> /dev/null 2>&1
         - docker buildx rm mybuilder
       after_success:
         - docker run --rm ajv21/docker-azcopy:$TRAVIS_COMMIT azcopy --version
