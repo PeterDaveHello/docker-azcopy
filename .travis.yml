@@ -31,4 +31,4 @@ jobs:
         - docker run --rm ajv21/docker-azcopy:$TRAVIS_COMMIT azcopy --version
 
  notifications:
-  email: false
+  email: false 
