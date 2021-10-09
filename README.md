@@ -20,7 +20,7 @@ The `latest` tag and short version (version string without the minor or patch ve
 
 Most versions of AzCopy will have its corresponding images here.
 
-You can find a valid version on the Docker Hub Tags page <https://hub.docker.com/r/peterdavehello/copy/tags>
+You can find a valid version on the Docker Hub Tags page <https://hub.docker.com/r/peterdavehello/azcopy/tags>
 
 ## Usage
 
