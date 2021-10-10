@@ -18,9 +18,9 @@ The Docker image tags here will all be mapping back to a corresponding AzCopy ve
 
 The `latest` tag and short version (version string without the minor or patch version) are also supported here, for example, using tag `10` will be the same as using the latest `10.x.y`, whatever the current latest v10 is.
 
-Most versions of AzCopy will have its corresponding images here.
-
 You can find a valid version on the Docker Hub Tags page <https://hub.docker.com/r/peterdavehello/azcopy/tags>
+
+Most versions of AzCopy will have its corresponding images here, but please note that inactive images may be removed by Docker Hub, reference: <https://www.docker.com/blog/scaling-dockers-business-to-serve-millions-more-developers-storage/>
 
 ## Usage
 
