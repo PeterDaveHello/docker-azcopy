@@ -33,7 +33,7 @@ jobs:
     - stage: Build test
       language: minimal
       before_script:
-        - LATEST_AZCOPY="$(curl -sLo- https://api.github.com/repos/Azure/azure-storage-azcopy/releases | jq -r '.[0].tag_name' | sed 's/^v//g')"
+        - LATEST_AZCOPY="$(curl -sSLo- https://api.github.com/repos/Azure/azure-storage-azcopy/releases | jq -r '.[0].tag_name' | sed 's/^v//g')"
         - test -n "$LATEST_AZCOPY"
         - export LATEST_AZCOPY
       script:
