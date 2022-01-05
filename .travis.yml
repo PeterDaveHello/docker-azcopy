@@ -43,15 +43,18 @@ jobs:
         - echo "$AZCOPY_VERSION"
         - tag=($(echo $AZCOPY_VERSION | tr "." " "))
       script:
-        - if [[ "$TRAVIS_TAG" =~ ^[0-9]+(\.[0-9]+){2}$ ]]; then
+        - if [ "$TRAVIS_PULL_REQUEST" = "true" ] || [ "$TRAVIS_BRANCH" != "master" ]; then
+            docker build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t docker-azcopy:$TRAVIS_COMMIT .;
+            docker run docker-azcopy:$TRAVIS_COMMIT azcopy --version;
+          else
             mkdir -p ~/.docker/cli-plugins;
             wget -O ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64;
             chmod a+x ~/.docker/cli-plugins/docker-buildx;
             docker run --privileged multiarch/qemu-user-static --reset -p yes;
             docker buildx create --use --name mybuilder;
             docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD};
-            travis_wait 30 docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t $DOCKER_USERNAME/docker-azcopy:$AZCOPY_VERSION -t $DOCKER_USERNAME/docker-azcopy:${tag[0]}.${tag[1]} -t $DOCKER_USERNAME/docker-azcopy:${tag[0]} -t $DOCKER_USERNAME/docker-azcopy:latest --platform linux/amd64,linux/arm64 --push .;
-          else
-            docker build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t docker-azcopy:$TRAVIS_COMMIT .;
-            docker run docker-azcopy:$TRAVIS_COMMIT azcopy --version;
+            travis_wait 30 docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t $DOCKER_USERNAME/docker-azcopy:latest --platform linux/amd64,linux/arm64 --push .;
+          fi
+        - if [[ "$TRAVIS_TAG" =~ ^[0-9]+(\.[0-9]+){2}$ ]]; then
+            docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t $DOCKER_USERNAME/docker-azcopy:$AZCOPY_VERSION -t $DOCKER_USERNAME/docker-azcopy:${tag[0]}.${tag[1]} -t $DOCKER_USERNAME/docker-azcopy:${tag[0]} --platform linux/amd64,linux/arm64 --push .;
           fi
