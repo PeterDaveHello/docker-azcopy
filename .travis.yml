@@ -53,8 +53,8 @@ jobs:
             docker run --privileged multiarch/qemu-user-static --reset -p yes;
             docker buildx create --use --name mybuilder;
             docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD};
-            travis_wait 30 docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t $DOCKER_USERNAME/docker-azcopy:latest --platform linux/amd64,linux/arm64 --push .;
+            travis_wait 30 docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t $DOCKER_USERNAME/docker-azcopy:latest --platform linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7,linux/386 --push .;
           fi
         - if [[ "$TRAVIS_TAG" =~ ^[0-9]+(\.[0-9]+){2}$ ]]; then
-            docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t $DOCKER_USERNAME/docker-azcopy:$AZCOPY_VERSION -t $DOCKER_USERNAME/docker-azcopy:${tag[0]}.${tag[1]} -t $DOCKER_USERNAME/docker-azcopy:${tag[0]} --platform linux/amd64,linux/arm64 --push .;
+            docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t $DOCKER_USERNAME/docker-azcopy:$AZCOPY_VERSION -t $DOCKER_USERNAME/docker-azcopy:${tag[0]}.${tag[1]} -t $DOCKER_USERNAME/docker-azcopy:${tag[0]} --platform linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7,linux/386 --push .;
           fi
