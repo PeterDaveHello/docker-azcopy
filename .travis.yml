@@ -16,7 +16,7 @@ jobs:
         - Test: hadolint
       language: minimal
       script:
-        - docker run --rm -i -v $PWD/.hadolint.yml:/.hadolint.yml hadolint/hadolint < Dockerfile
+        - docker run -i -v $PWD/.hadolint.yml:/.hadolint.yml hadolint/hadolint < Dockerfile
 
     - stage: Static test
       env:
@@ -47,12 +47,11 @@ jobs:
             mkdir -p ~/.docker/cli-plugins;
             wget -O ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64;
             chmod a+x ~/.docker/cli-plugins/docker-buildx;
-            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes;
+            docker run --privileged multiarch/qemu-user-static --reset -p yes;
             docker buildx create --use --name mybuilder;
             docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD};
             travis_wait 30 docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t $DOCKER_USERNAME/docker-azcopy:$AZCOPY_VERSION -t $DOCKER_USERNAME/docker-azcopy:${tag[0]}.${tag[1]} -t $DOCKER_USERNAME/docker-azcopy:${tag[0]} -t $DOCKER_USERNAME/docker-azcopy:latest --platform linux/amd64,linux/arm64 --push .;
-            docker buildx rm mybuilder;
           else
             docker build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t docker-azcopy:$TRAVIS_COMMIT .;
-            docker run --rm docker-azcopy:$TRAVIS_COMMIT azcopy --version;
+            docker run docker-azcopy:$TRAVIS_COMMIT azcopy --version;
           fi
