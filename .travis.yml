@@ -48,7 +48,7 @@ jobs:
             docker run docker-azcopy:$TRAVIS_COMMIT azcopy --version;
           else
             mkdir -p ~/.docker/cli-plugins;
-            wget -O ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64;
+            wget -O ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.7.1/buildx-v0.7.1.linux-amd64;
             chmod a+x ~/.docker/cli-plugins/docker-buildx;
             docker run --privileged multiarch/qemu-user-static --reset -p yes;
             docker buildx create --use --name mybuilder;
