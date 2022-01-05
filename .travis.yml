@@ -31,6 +31,8 @@ jobs:
           - .npx
 
     - stage: Build test
+      env:
+        secure: ny4xWYzirn3MBJdjwAVcdXjl8s1hu3viz2MRNe733qY+6S/63FsEEtw/IMNYKVrENhl7Z7gn9m1Phd4bwi0//hdd5GmtMeXV+6tdADm4Vcctl0IZiUDSdFzCHM1Y6sO2k+0VuPh/ctdmOBfG9MXUdvIED5zjR/LKCJOQ9jVC2mz1DH7Ax4U9KywF4gzbMERwGx8rQzVlH81B/1s+GMUmouX5IvPSe8UTd6iGgCwNZ+JhQ7pB6E72blA/Ro25GJ3HdqZoF6QxYh8YTs4a0b8wj738jyuQX4rTPvH7wx1cX+IHhEFelUo3MEtZpyBtwHzcaCdtNfzN0VRNCcne25IPxF3hXErazln6UL1sWFENTqKj1z4146iUgGePp8Sr6Q4FcKjeySq7t+WRwZTYe4d0rTzU/hK5vKkvCwoy+BaqEXIxFFwcoI6BoMzGSSWRwmpwz31E7hQwgubIROMHY0QZRTLLnNBpVPCf18Iy6uH76fAEO2RnN/yIQINts3V4tAGz1xfaQiMblO9N8JB0Ltll+cRAkhux4lbZqQxEqTe/LbSRVk63NNHYHhp4hfj8ldtpZkCNJm46Rmif3QbZHrEbYU2GVpJNzrjwU285YGhJjeCjeYW+I66FKoaWrUufeIQABVtj+gNTzYtv5nLQOsZoDpTTk9Y/Bw4SEA0UKmQWz5I=
       language: minimal
       before_script:
         - if [[ "$TRAVIS_TAG" =~ ^[0-9]+(\.[0-9]+){2}$ ]]; then
