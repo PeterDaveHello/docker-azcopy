@@ -43,7 +43,7 @@ jobs:
           fi
         - echo "$AZCOPY_VERSION"
         - tag=($(echo $AZCOPY_VERSION | tr "." " "))
-        - DOCKER_REPO="$DOCKER_USERNAME/docker-azcopy"
+        - DOCKER_REPO="$DOCKER_USERNAME/azcopy"
         - DOCKER_PLATFORM="linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7,linux/386"
       script:
         - if [ "$TRAVIS_PULL_REQUEST" = "true" ] || [ "true" != "$VALID_TAG" ]; then
