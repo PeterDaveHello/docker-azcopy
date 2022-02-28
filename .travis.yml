@@ -45,7 +45,7 @@ jobs:
         - DOCKER_REPO="$DOCKER_USERNAME/docker-azcopy"
         - DOCKER_PLATFORM="linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7,linux/386"
       script:
-        - if [ "$TRAVIS_PULL_REQUEST" = "true" ] || [ "$TRAVIS_BRANCH" != "master" ]; then
+        - if [ "$TRAVIS_PULL_REQUEST" = "true" ] || ( [ "$TRAVIS_BRANCH" != "master" ] && [ -z "$TRAVIS_TAG" ] ); then
             docker build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t docker-azcopy:$TRAVIS_COMMIT .;
             docker run docker-azcopy:$TRAVIS_COMMIT azcopy --version;
           else
