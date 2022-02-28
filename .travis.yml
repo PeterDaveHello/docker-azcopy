@@ -37,6 +37,7 @@ jobs:
       before_script:
         - if [[ "$TRAVIS_TAG" =~ ^[0-9]+(\.[0-9]+){2}$ ]]; then
             AZCOPY_VERSION="$TRAVIS_TAG";
+            export VALID_TAG="true";
           else
             AZCOPY_VERSION=$(curl -sLo- https://api.github.com/repos/Azure/azure-storage-azcopy/releases | grep tag_name | head -n 1 | awk -F'"' '{print $4}' | sed 's/^v//g');
           fi
@@ -45,7 +46,7 @@ jobs:
         - DOCKER_REPO="$DOCKER_USERNAME/docker-azcopy"
         - DOCKER_PLATFORM="linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7,linux/386"
       script:
-        - if [ "$TRAVIS_PULL_REQUEST" = "true" ] || ( [ "$TRAVIS_BRANCH" != "master" ] && [ -z "$TRAVIS_TAG" ] ); then
+        - if [ "$TRAVIS_PULL_REQUEST" = "true" ] || [ "true" != "$VALID_TAG" ]; then
             docker build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t docker-azcopy:$TRAVIS_COMMIT .;
             docker run docker-azcopy:$TRAVIS_COMMIT azcopy --version;
           else
@@ -57,6 +58,6 @@ jobs:
             docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD};
             travis_wait 30 docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t "$DOCKER_REPO:latest" --platform "$DOCKER_PLATFORM" --push .;
           fi
-        - if [[ "$TRAVIS_TAG" =~ ^[0-9]+(\.[0-9]+){2}$ ]]; then
+        - if [ "true" = "$VALID_TAG" ]; then
             docker buildx build --build-arg AZCOPY_VERSION="$AZCOPY_VERSION" -t "$DOCKER_REPO:$AZCOPY_VERSION" -t "$DOCKER_REPO:${tag[0]}.${tag[1]}" -t "$DOCKER_REPO:${tag[0]}" --platform "$DOCKER_PLATFORM" --push .;
           fi
