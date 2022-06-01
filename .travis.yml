@@ -23,7 +23,7 @@ jobs:
         - Test: dockerfile_lint
       language: node_js
       node_js:
-        - "12"
+        - "18"
       script:
         - npx --cache .npx dockerfile_lint
       cache:
