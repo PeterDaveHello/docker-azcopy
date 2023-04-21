@@ -7,7 +7,7 @@ FROM golang:$GO_VERSION-alpine$ALPINE_VERSION as build
 ENV GOARCH=$TARGETARCH GOOS=linux
 WORKDIR /azcopy
 ARG AZCOPY_VERSION
-RUN wget "https://github.com/Azure/azure-storage-azcopy/archive/v$AZCOPY_VERSION.tar.gz" -O src.tgz
+RUN wget "https://github.com/Azure/azure-storage-azcopy/archive/v$AZCOPY_VERSION.tar.gz" -O src.tgz || wget "https://github.com/Azure/azure-storage-azcopy/archive/$AZCOPY_VERSION.tar.gz" -O src.tgz
 RUN tar xf src.tgz --strip 1 \
  && go build -o azcopy \
  && ./azcopy --version
