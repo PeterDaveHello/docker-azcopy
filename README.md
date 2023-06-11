@@ -12,6 +12,19 @@ Docker-AzCopy is a Docker image based on Alpine Linux, pre-installed with Azure 
 
 See the [AzCopy README](https://github.com/Azure/azure-storage-azcopy/#readme) for more information.
 
+## Docker image Repository
+
+We push the built image to Docker Hub and GitHub Container Registry:
+
+- GitHub Container Registry:
+  - `ghcr.io/peterdavehello/azcopy`
+  - <https://github.com/PeterDaveHello/azcopy/pkgs/container/azcopy>
+- Docker Hub:
+  - `peterdavehello/azcopy`
+  - <https://hub.docker.com/r/peterdavehello/azcopy/>
+
+Use the prefix `ghcr.io/` if you prefer to use GitHub Container Registry.
+
 ## Versioning
 
 The Docker image tags available here correspond to Azure AzCopy versions found on [its releases page on GitHub](https://github.com/Azure/azure-storage-azcopy/releases), without the `v` prefix.
